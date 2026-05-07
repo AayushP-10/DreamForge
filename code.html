@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DreamForge Studio Main Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#e0e3e5",
+                    "on-primary-container": "#ca8efc",
+                    "inverse-surface": "#e0e3e5",
+                    "tertiary-container": "#353d52",
+                    "on-secondary-fixed": "#00201c",
+                    "inverse-primary": "#7c43ab",
+                    "background": "#101415",
+                    "outline": "#988d9c",
+                    "secondary": "#44e2cd",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "outline-variant": "#4c4451",
+                    "primary-fixed-dim": "#e0b6ff",
+                    "inverse-on-surface": "#2d3133",
+                    "on-secondary-fixed-variant": "#005047",
+                    "on-primary": "#4a067a",
+                    "on-secondary": "#003731",
+                    "tertiary": "#bec6e0",
+                    "surface-container-highest": "#323537",
+                    "secondary-fixed-dim": "#3cddc7",
+                    "on-surface-variant": "#cfc2d2",
+                    "surface-dim": "#101415",
+                    "on-primary-fixed-variant": "#632892",
+                    "primary": "#e0b6ff",
+                    "secondary-fixed": "#62fae3",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-fixed": "#2d004f",
+                    "on-secondary-container": "#004d44",
+                    "surface-container": "#1d2022",
+                    "secondary-container": "#03c6b2",
+                    "primary-container": "#581c87",
+                    "surface-tint": "#e0b6ff",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#dae2fd",
+                    "surface-bright": "#363a3b",
+                    "on-surface": "#e0e3e5",
+                    "surface-container-high": "#272a2c",
+                    "on-tertiary-fixed": "#131b2e",
+                    "surface-variant": "#323537",
+                    "surface-container-low": "#191c1e",
+                    "on-tertiary": "#283044",
+                    "surface": "#101415",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-tertiary-container": "#a0a8c1",
+                    "primary-fixed": "#f2daff",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#0b0f10",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "2rem",
+                    "unit": "8px",
+                    "section-gap": "4rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(25, 28, 30, 0.5); /* surface-container-low with opacity */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(224, 227, 229, 0.1); /* on-background with opacity */
+            box-shadow: inset 0 0 0 1px rgba(224, 227, 229, 0.05);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 32px rgba(124, 67, 171, 0.15); /* inverse-primary */
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #7c43ab, #e0b6ff); /* inverse-primary to primary */
+        }
+        .pulse-active {
+            animation: pulse-soft 2s infinite ease-in-out;
+        }
+        @keyframes pulse-soft {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopAppBar JSON Component -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-20 bg-background/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-[0_0_20px_rgba(124,67,171,0.1)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-bold text-primary leading-tight">DreamForge</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<span class="text-body-md text-on-surface-variant hidden lg:block">Calm, creative bedtime stories with built-in quality judging</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<button class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant/30" id="accountBtn">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChoP1ep-ZD5vCESyhLpLKAMG4UT5X3q5aR3dcldEFV7s3ePjj7Aq2cQ5n0zBiusftZ_ja0B6Vnnfa9PvmMvfDAdsEnbn2lyMtJ4jbVbkJz6GFlp83t4FF4gfebZyM2xRAmo_NtA2wQHYCAaB8ojYWNmpNQuulmPcxphqAax4fNY1QYAzwtjg1a8FZeU5qLHB6-h_6k4LPKp964SkiiCcYBCt5BhexVP8fcANlG4aMudjuasJvYlVb6GgwWwLl4u2RSMn9F0Ld-jCrC"/>
+</button>
+<div class="hidden absolute right-0 mt-2 w-56 rounded-xl glass-panel p-3 border border-outline-variant/30" id="accountMenu">
+<p class="text-label-md text-on-surface-variant mb-2" id="accountStatus">Not signed in</p>
+<button class="w-full py-2 px-3 rounded-lg btn-gradient text-background text-label-md font-label-md" id="openSignupBtn">Sign up / Sign in</button>
+<button class="w-full py-2 px-3 mt-2 rounded-lg border border-outline-variant text-on-surface-variant text-label-md font-label-md hidden" id="signOutBtn">Sign out</button>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar JSON Component & Main Layout -->
+<div class="flex flex-1 pt-20">
+<!-- SideNav -->
+<nav class="hidden lg:flex flex-col fixed left-0 top-20 h-[calc(100vh-5rem)] z-40 bg-surface-container-low/50 backdrop-blur-2xl border-r border-outline-variant/10 w-64 pb-8">
+<div class="p-container-padding flex flex-col gap-2 border-b border-outline-variant/10">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary text-lg">DreamForge</h2>
+<p class="text-label-md font-label-md text-on-surface-variant text-xs">AI Bedtime Studio</p>
+</div>
+</div>
+<button class="w-full py-3 px-4 rounded-xl btn-gradient text-background font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 transition-opacity mt-4 shadow-[0_0_15px_rgba(124,67,171,0.3)]" id="newStoryBtn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                    Create New Story
+                </button>
+</div>
+<div class="flex flex-col flex-1 py-6 px-4 gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container/30 text-primary border-r-4 border-primary transition-all nav-link" data-view="workshop" href="#">
+<span class="material-symbols-outlined">auto_fix</span>
+<span class="text-label-md font-label-md">Workshop</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/20 hover:bg-tertiary-container/30 transition-all nav-link" data-view="library" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-label-md font-label-md">Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/20 hover:bg-tertiary-container/30 transition-all nav-link" data-view="gallery" href="#">
+<span class="material-symbols-outlined">collections_bookmark</span>
+<span class="text-label-md font-label-md">Gallery</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/20 hover:bg-tertiary-container/30 transition-all nav-link" data-view="performance" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-md font-label-md">Performance</span>
+</a>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="flex-1 lg:ml-64 p-4 md:p-container-padding flex flex-col xl:flex-row gap-gutter">
+<div class="contents" id="workshopView">
+<!-- Left Column: Story Request & Output -->
+<div class="flex-1 flex flex-col gap-6 w-full">
+<!-- Story Request Panel -->
+<section class="glass-panel rounded-2xl p-6 glow-hover transition-all duration-500 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+<h2 class="text-headline-md font-headline-md text-on-background mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">flare</span>
+                        What kind of story should we tell tonight?
+                    </h2>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant">Story Prompt</label>
+<textarea class="w-full bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline min-h-[120px]" id="promptInput" placeholder="e.g., A shy firefly who helps the moon find its song."></textarea>
+</div>
+<!-- Age & Theme Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-3">
+<label class="text-label-md font-label-md text-on-surface-variant">Child Age Group</label>
+<div class="flex gap-3">
+<button class="flex-1 py-2 px-4 rounded-xl border border-secondary/50 text-secondary bg-secondary/10 text-label-md font-label-md transition-all age-btn" data-age="5-7" id="age57">
+                                        5-7 Years
+                                    </button>
+<button class="flex-1 py-2 px-4 rounded-xl border border-outline-variant text-on-surface-variant hover:bg-surface-variant/30 text-label-md font-label-md transition-all age-btn" data-age="8-10" id="age810">
+                                        8-10 Years
+                                    </button>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-label-md font-label-md text-on-surface-variant">Theme</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-full border border-secondary text-secondary text-label-md font-label-md cursor-pointer hover:bg-secondary/10 transition-colors theme-chip" data-theme="Adventure">Adventure</span>
+<span class="px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-secondary hover:text-secondary text-label-md font-label-md cursor-pointer transition-colors theme-chip" data-theme="Kindness">Kindness</span>
+<span class="px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-secondary hover:text-secondary text-label-md font-label-md cursor-pointer transition-colors theme-chip" data-theme="Space">Space</span>
+<span class="px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-secondary hover:text-secondary text-label-md font-label-md cursor-pointer transition-colors theme-chip" data-theme="Magic">Magic</span>
+</div>
+</div>
+</div>
+<!-- Inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant">Characters</label>
+<input class="w-full bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline" id="charactersInput" placeholder="e.g., A brave mint dragon..." type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant">Setting</label>
+<input class="w-full bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline" id="settingInput" placeholder="e.g., A floating crystal island..." type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant">Parent Reading Level</label>
+<select class="w-full bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="readingLevelInput">
+<option value="">Auto</option>
+<option value="Simple (age 5-6)">Simple (age 5-6)</option>
+<option value="Balanced (age 7-8)">Balanced (age 7-8)</option>
+<option value="Advanced (age 9-10)">Advanced (age 9-10)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant">Avoid Topics (parent boundary)</label>
+<input class="w-full bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline" id="disallowTopicsInput" placeholder="e.g., storms, darkness, separation anxiety" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<input class="rounded border-outline-variant bg-on-background/5 text-primary focus:ring-primary" id="sagaModeInput" type="checkbox"/>
+<label class="text-label-md font-label-md text-on-surface-variant" for="sagaModeInput">Automatic bedtime sequence mode (continue multi-night arc)</label>
+</div>
+<!-- Actions -->
+<div class="flex flex-wrap gap-4 pt-2">
+<button class="flex-1 sm:flex-none py-3 px-8 rounded-xl btn-gradient text-background font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(124,67,171,0.2)]" id="generateBtn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+                                Generate Story
+                            </button>
+<button class="flex-1 sm:flex-none py-3 px-6 rounded-xl border border-outline-variant text-on-background hover:bg-surface-variant/30 font-label-md text-label-md flex items-center justify-center gap-2 transition-all" id="surpriseBtn">
+<span class="material-symbols-outlined">shuffle</span>
+                                Surprise Me
+                            </button>
+</div>
+</div>
+</section>
+<!-- Story Output Panel -->
+<section class="glass-panel rounded-2xl p-0 glow-hover transition-all duration-500 flex flex-col flex-1 min-h-[500px]">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/30 rounded-t-2xl">
+<h3 class="text-headline-md font-headline-md text-primary" id="storyTitle">Generated Bedtime Story</h3>
+</div>
+<div class="p-6 flex-1 overflow-y-auto">
+<div class="prose prose-invert max-w-none text-body-lg text-on-background/90 leading-relaxed space-y-6" id="storyContent">
+<p>Generate a story to begin.</p>
+</div>
+</div>
+</section>
+<section class="glass-panel rounded-2xl p-6">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider mb-3">Narration Script (with pacing markers)</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+<div class="md:col-span-2">
+<label class="text-xs text-on-surface-variant">Voice</label>
+<select class="w-full mt-1 bg-on-background/5 border border-outline-variant/30 rounded-xl px-3 py-2 text-body-md text-on-background focus:border-primary focus:ring-1 focus:ring-primary transition-all" id="voiceSelect"></select>
+</div>
+<div class="flex items-end gap-2">
+<button class="flex-1 py-2 rounded-lg btn-gradient text-background text-label-md font-label-md" id="playNarrationBtn">Play</button>
+<button class="flex-1 py-2 rounded-lg border border-outline-variant text-on-surface-variant text-label-md font-label-md" id="stopNarrationBtn">Stop</button>
+</div>
+</div>
+<div class="prose prose-invert max-w-none text-body-md text-on-background/90 leading-relaxed space-y-4 max-h-[220px] overflow-y-auto" id="narrationContent">
+<p>Generate a story to produce the read-aloud narration script with pacing markers.</p>
+</div>
+</section>
+<section class="glass-panel rounded-2xl p-6">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider mb-3">Why This Story</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-xs text-on-surface-variant">Bedtime State</p>
+<p class="text-label-md text-primary mt-1" id="expBedtimeState">-</p>
+</div>
+<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-xs text-on-surface-variant">Draft Candidates</p>
+<p class="text-label-md text-primary mt-1" id="expCandidates">-</p>
+</div>
+<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-xs text-on-surface-variant">Selection Logic</p>
+<p class="text-label-md text-primary mt-1" id="expSelection">-</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low" id="expQuality"></div>
+<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low" id="expSafety"></div>
+</div>
+</section>
+</div>
+</div>
+<section class="hidden w-full glass-panel rounded-2xl p-8" id="libraryView">
+<h2 class="text-headline-md font-headline-md text-primary mb-4">Library</h2>
+<p class="text-body-md text-on-surface-variant mb-6">Your saved story history appears here.</p>
+<div class="space-y-3" id="libraryList">
+<p class="text-label-md text-outline">No stories saved yet. Generate one in Workshop first.</p>
+</div>
+</section>
+<section class="hidden w-full glass-panel rounded-2xl p-8" id="galleryView">
+<h2 class="text-headline-md font-headline-md text-primary mb-4">Gallery</h2>
+<p class="text-body-md text-on-surface-variant mb-6">A card view of your recent stories.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="galleryList"></div>
+</section>
+<section class="hidden w-full glass-panel rounded-2xl p-8" id="performanceView">
+<h2 class="text-headline-md font-headline-md text-primary mb-4">Performance Report</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-label-md text-on-surface-variant">Total Stories</p>
+<p class="text-headline-md text-primary mt-1" id="perfTotal">0</p>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-label-md text-on-surface-variant">Average Score</p>
+<p class="text-headline-md text-primary mt-1"><span id="perfAvg">0.0</span>/50</p>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low">
+<p class="text-label-md text-on-surface-variant">Pass Rate</p>
+<p class="text-headline-md text-primary mt-1"><span id="perfRate">0.0</span>%</p>
+</div>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider mb-3">Recent Runs</h3>
+<div class="space-y-3" id="perfRecent">
+<p class="text-label-md text-outline">No performance data yet.</p>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer JSON Component -->
+<footer class="w-full mt-auto px-container-padding bg-surface-container-lowest py-4 border-t border-outline-variant/10 lg:ml-64 relative z-10">
+</footer>
+<div class="hidden fixed inset-0 bg-black/60 z-[60] items-center justify-center" id="authModal">
+<div class="glass-panel rounded-2xl p-6 w-full max-w-md">
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Create account</h3>
+<input class="w-full mb-3 bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background" id="authName" placeholder="Your name" type="text"/>
+<input class="w-full mb-4 bg-on-background/5 border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-background" id="authEmail" placeholder="Email" type="email"/>
+<div class="flex gap-3">
+<button class="flex-1 py-2 rounded-lg btn-gradient text-background text-label-md font-label-md" id="authSaveBtn">Save</button>
+<button class="flex-1 py-2 rounded-lg border border-outline-variant text-on-surface-variant text-label-md font-label-md" id="authCancelBtn">Cancel</button>
+</div>
+</div>
+</div>
+<script>
+let selectedAge = "5-7";
+let selectedTheme = "Adventure";
+const ACCOUNT_STORAGE_KEY = "dreamforge_account_v2";
+let currentUser = null;
+let narrationRawText = "";
+let availableVoices = [];
+
+function setLoading(isLoading) {
+  const btn = document.getElementById("generateBtn");
+  if (!btn) return;
+  btn.disabled = isLoading;
+  btn.style.opacity = isLoading ? "0.7" : "1";
+  btn.innerHTML = isLoading
+    ? '<span class="material-symbols-outlined">hourglass_top</span>Generating...'
+    : '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">auto_fix_high</span>Generate Story';
+}
+
+function randomPrompt() {
+  const prompts = [
+    "A little cloud who is afraid of thunder learns to sing softly with the moon.",
+    "Two siblings and their robot owl discover a floating bedtime library.",
+    "A tiny whale in the sky ocean helps sleepy stars find their constellations."
+  ];
+  return prompts[Math.floor(Math.random() * prompts.length)];
+}
+
+function fallbackSuggestion() {
+  const prompts = [
+    "A gentle bedtime story where a little lantern learns to glow only when someone feels brave.",
+    "A story about two sleepy cloud friends who help the moon sort tonight's dreams.",
+    "A calm ocean bedtime adventure where a tiny whale guides stars back to their constellations."
+  ];
+  return prompts[Math.floor(Math.random() * prompts.length)];
+}
+
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem(ACCOUNT_STORAGE_KEY) || "null");
+  } catch (e) {
+    return null;
+  }
+}
+
+function setActiveView(viewName) {
+  const workshopView = document.getElementById("workshopView");
+  const libraryView = document.getElementById("libraryView");
+  const galleryView = document.getElementById("galleryView");
+  const performanceView = document.getElementById("performanceView");
+  if (!workshopView || !libraryView || !galleryView || !performanceView) return;
+
+  workshopView.classList.toggle("hidden", viewName !== "workshop");
+  libraryView.classList.toggle("hidden", viewName !== "library");
+  galleryView.classList.toggle("hidden", viewName !== "gallery");
+  performanceView.classList.toggle("hidden", viewName !== "performance");
+
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    const isActive = link.dataset.view === viewName;
+    link.classList.toggle("bg-primary-container/30", isActive);
+    link.classList.toggle("text-primary", isActive);
+    link.classList.toggle("border-r-4", isActive);
+    link.classList.toggle("border-primary", isActive);
+    if (!isActive) {
+      link.classList.add("text-on-surface-variant");
+      link.classList.remove("bg-primary-container/30");
+      link.classList.remove("border-r-4");
+      link.classList.remove("border-primary");
+    }
+  });
+}
+
+function renderGallery(stories) {
+  const target = document.getElementById("galleryList");
+  if (!target) return;
+  if (!stories.length) {
+    target.innerHTML = '<p class="text-label-md text-outline">No gallery items yet.</p>';
+    return;
+  }
+  target.innerHTML = stories
+    .slice(0, 6)
+    .map((item) => `<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low"><p class="text-label-md text-primary">${item.title}</p><p class="text-xs text-on-surface-variant mt-2">${item.preview}</p></div>`)
+    .join("");
+}
+
+async function loadLibrary() {
+  const target = document.getElementById("libraryList");
+  if (!target) return;
+  if (!currentUser || !currentUser.id) {
+    target.innerHTML = '<p class="text-label-md text-outline">Sign in to see your story history.</p>';
+    renderGallery([]);
+    return;
+  }
+
+  const res = await fetch(`/api/library/${currentUser.id}`);
+  const data = await res.json();
+  const stories = Array.isArray(data.stories) ? data.stories : [];
+  if (!stories.length) {
+    target.innerHTML = '<p class="text-label-md text-outline">No stories saved yet. Generate one in Workshop first.</p>';
+    renderGallery([]);
+    return;
+  }
+  target.innerHTML = stories
+    .map((item) => `<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low"><p class="text-label-md text-primary">${item.title}</p><p class="text-xs text-on-surface-variant mt-1">${item.preview}</p><p class="text-[11px] text-outline mt-2">Score: ${item.score_total ?? "--"}/50</p></div>`)
+    .join("");
+  renderGallery(stories);
+}
+
+async function loadPerformance() {
+  const totalEl = document.getElementById("perfTotal");
+  const avgEl = document.getElementById("perfAvg");
+  const rateEl = document.getElementById("perfRate");
+  const recentEl = document.getElementById("perfRecent");
+  if (!totalEl || !avgEl || !rateEl || !recentEl) return;
+
+  if (!currentUser || !currentUser.id) {
+    totalEl.textContent = "0";
+    avgEl.textContent = "0.0";
+    rateEl.textContent = "0.0";
+    recentEl.innerHTML = '<p class="text-label-md text-outline">Sign in to see performance data.</p>';
+    return;
+  }
+
+  const res = await fetch(`/api/performance/${currentUser.id}`);
+  const data = await res.json();
+  if (!res.ok) {
+    recentEl.innerHTML = '<p class="text-label-md text-outline">Unable to load performance data.</p>';
+    return;
+  }
+
+  totalEl.textContent = String(data.total_stories ?? 0);
+  avgEl.textContent = String(data.avg_score ?? "0.0");
+  rateEl.textContent = String(data.pass_rate ?? "0.0");
+
+  const recent = Array.isArray(data.recent) ? data.recent : [];
+  if (!recent.length) {
+    recentEl.innerHTML = '<p class="text-label-md text-outline">No performance data yet.</p>';
+    return;
+  }
+  recentEl.innerHTML = recent
+    .map((item) => `<div class="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-low flex items-center justify-between"><div><p class="text-label-md text-primary">${item.title}</p><p class="text-xs text-on-surface-variant">${item.created_at.replace("T", " ").slice(0, 16)}</p></div><div class="text-right"><p class="text-label-md ${item.passed ? "text-secondary" : "text-primary"}">${item.passed ? "PASS" : "REVISE"}</p><p class="text-xs text-on-surface-variant">${item.score_total ?? "--"}/50</p></div></div>`)
+    .join("");
+}
+
+function applyAccountState() {
+  const statusEl = document.getElementById("accountStatus");
+  const signOutBtn = document.getElementById("signOutBtn");
+  if (currentUser && statusEl && signOutBtn) {
+    statusEl.textContent = `${currentUser.name} (${currentUser.email})`;
+    signOutBtn.classList.remove("hidden");
+  } else if (statusEl && signOutBtn) {
+    statusEl.textContent = "Not signed in";
+    signOutBtn.classList.add("hidden");
+  }
+}
+
+function renderExplainability(explainability) {
+  const stateEl = document.getElementById("expBedtimeState");
+  const candEl = document.getElementById("expCandidates");
+  const selEl = document.getElementById("expSelection");
+  const qualityEl = document.getElementById("expQuality");
+  const safetyEl = document.getElementById("expSafety");
+  if (!stateEl || !candEl || !selEl || !qualityEl || !safetyEl) return;
+
+  const info = explainability || {};
+  stateEl.textContent = String(info.bedtime_state || "-");
+  candEl.textContent = String(info.candidate_count || "-");
+  selEl.textContent = String(info.selection_reason || "-");
+
+  const q = Array.isArray(info.quality_strengths) ? info.quality_strengths : [];
+  const s = Array.isArray(info.safety_strengths) ? info.safety_strengths : [];
+  qualityEl.innerHTML = `<p class="text-xs text-on-surface-variant mb-2">Quality signals</p>${q.length ? q.map((x) => `<p class="text-label-md text-primary mb-1">• ${x}</p>`).join("") : '<p class="text-label-md text-outline">No data yet.</p>'}`;
+  safetyEl.innerHTML = `<p class="text-xs text-on-surface-variant mb-2">Safety signals</p>${s.length ? s.map((x) => `<p class="text-label-md text-secondary mb-1">• ${x}</p>`).join("") : '<p class="text-label-md text-outline">No data yet.</p>'}`;
+}
+
+function renderNarration(text) {
+  const el = document.getElementById("narrationContent");
+  if (!el) return;
+  narrationRawText = text ? String(text) : "";
+  if (!text) {
+    el.innerHTML = "<p>Generate a story to produce the read-aloud narration script with pacing markers.</p>";
+    return;
+  }
+  el.innerHTML = `<p>${String(text).replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br/>")}</p>`;
+}
+
+function loadVoiceOptions() {
+  const select = document.getElementById("voiceSelect");
+  if (!select || !("speechSynthesis" in window)) return;
+  const voices = window.speechSynthesis.getVoices() || [];
+  const preferred = voices.filter((v) => /en/i.test(v.lang)).slice(0, 4);
+  availableVoices = preferred.length ? preferred : voices.slice(0, 4);
+  if (!availableVoices.length) {
+    select.innerHTML = '<option value="">No voices available</option>';
+    return;
+  }
+  select.innerHTML = availableVoices
+    .map((v) => `<option value="${v.name}">${v.name} (${v.lang})</option>`)
+    .join("");
+}
+
+function parseNarrationForSpeech(text) {
+  return text
+    .replaceAll("[PAUSE_SHORT]", ". ")
+    .replaceAll("[PAUSE_MEDIUM]", "... ")
+    .replaceAll("[PAUSE_LONG]", "..... ")
+    .replaceAll("[SOFTEN]", "");
+}
+
+document.querySelectorAll(".age-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    selectedAge = btn.dataset.age || "5-7";
+    document.querySelectorAll(".age-btn").forEach((b) => {
+      b.classList.remove("border-secondary/50", "text-secondary", "bg-secondary/10");
+      b.classList.add("border-outline-variant", "text-on-surface-variant");
+    });
+    btn.classList.add("border-secondary/50", "text-secondary", "bg-secondary/10");
+  });
+});
+
+document.querySelectorAll(".theme-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    selectedTheme = chip.dataset.theme || "Adventure";
+    document.querySelectorAll(".theme-chip").forEach((c) => {
+      c.classList.remove("border-secondary", "text-secondary", "bg-secondary/10");
+      c.classList.add("border-outline-variant", "text-on-surface-variant");
+    });
+    chip.classList.add("border-secondary", "text-secondary", "bg-secondary/10");
+  });
+});
+
+document.getElementById("surpriseBtn")?.addEventListener("click", async () => {
+  const promptInput = document.getElementById("promptInput");
+  if (!promptInput) return;
+  if (!currentUser || !currentUser.id) {
+    promptInput.value = fallbackSuggestion();
+    return;
+  }
+  try {
+    const res = await fetch(`/api/suggestions/${currentUser.id}`);
+    const data = await res.json();
+    const suggestions = Array.isArray(data.suggestions) ? data.suggestions : [];
+    promptInput.value = suggestions.length ? suggestions[Math.floor(Math.random() * suggestions.length)] : fallbackSuggestion();
+  } catch (e) {
+    promptInput.value = fallbackSuggestion();
+  }
+});
+
+document.getElementById("newStoryBtn")?.addEventListener("click", () => {
+  const promptInput = document.getElementById("promptInput");
+  const charactersInput = document.getElementById("charactersInput");
+  const settingInput = document.getElementById("settingInput");
+  if (promptInput) promptInput.value = "";
+  if (charactersInput) charactersInput.value = "";
+  if (settingInput) settingInput.value = "";
+  const readingLevelInput = document.getElementById("readingLevelInput");
+  const disallowTopicsInput = document.getElementById("disallowTopicsInput");
+  const sagaModeInput = document.getElementById("sagaModeInput");
+  if (readingLevelInput) readingLevelInput.value = "";
+  if (disallowTopicsInput) disallowTopicsInput.value = "";
+  if (sagaModeInput) sagaModeInput.checked = false;
+  document.getElementById("storyTitle").textContent = "Generated Bedtime Story";
+  document.getElementById("storyContent").innerHTML = "<p>Generate a story to begin.</p>";
+  renderNarration("");
+  renderExplainability(null);
+  setActiveView("workshop");
+});
+
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    setActiveView(link.dataset.view || "workshop");
+  });
+});
+
+document.getElementById("accountBtn")?.addEventListener("click", () => {
+  document.getElementById("accountMenu")?.classList.toggle("hidden");
+});
+
+document.getElementById("openSignupBtn")?.addEventListener("click", () => {
+  document.getElementById("authModal")?.classList.remove("hidden");
+  document.getElementById("authModal")?.classList.add("flex");
+});
+
+document.getElementById("authCancelBtn")?.addEventListener("click", () => {
+  document.getElementById("authModal")?.classList.add("hidden");
+  document.getElementById("authModal")?.classList.remove("flex");
+});
+
+document.getElementById("authSaveBtn")?.addEventListener("click", async () => {
+  const name = (document.getElementById("authName")?.value || "").trim();
+  const email = (document.getElementById("authEmail")?.value || "").trim();
+  if (!name || !email) {
+    alert("Please enter name and email.");
+    return;
+  }
+  const res = await fetch("/api/auth/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email })
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.error || "Could not create account.");
+    return;
+  }
+  currentUser = data;
+  localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(currentUser));
+  applyAccountState();
+  document.getElementById("authModal")?.classList.add("hidden");
+  document.getElementById("authModal")?.classList.remove("flex");
+  loadLibrary();
+  loadPerformance();
+});
+
+document.getElementById("signOutBtn")?.addEventListener("click", () => {
+  localStorage.removeItem(ACCOUNT_STORAGE_KEY);
+  currentUser = null;
+  applyAccountState();
+  loadLibrary();
+  loadPerformance();
+});
+
+document.getElementById("playNarrationBtn")?.addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    alert("Speech synthesis is not supported in this browser.");
+    return;
+  }
+  if (!narrationRawText.trim()) {
+    alert("Generate a story first to play narration.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(parseNarrationForSpeech(narrationRawText));
+  utter.rate = 0.9;
+  utter.pitch = 1.0;
+  const selectedName = document.getElementById("voiceSelect")?.value || "";
+  const selectedVoice = availableVoices.find((v) => v.name === selectedName);
+  if (selectedVoice) utter.voice = selectedVoice;
+  window.speechSynthesis.speak(utter);
+});
+
+document.getElementById("stopNarrationBtn")?.addEventListener("click", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
+
+document.getElementById("generateBtn")?.addEventListener("click", async () => {
+  const prompt = (document.getElementById("promptInput")?.value || "").trim();
+  const characters = (document.getElementById("charactersInput")?.value || "").trim();
+  const setting = (document.getElementById("settingInput")?.value || "").trim();
+  const readingLevel = (document.getElementById("readingLevelInput")?.value || "").trim();
+  const disallowTopics = (document.getElementById("disallowTopicsInput")?.value || "").trim();
+  const sagaMode = Boolean(document.getElementById("sagaModeInput")?.checked);
+
+  if (!prompt) {
+    alert("Please add a story prompt first.");
+    return;
+  }
+  if (!currentUser || !currentUser.id) {
+    alert("Please sign up / sign in first.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prompt,
+        age_band: selectedAge,
+        theme: selectedTheme,
+        characters,
+        setting,
+        reading_level: readingLevel,
+        disallow_topics: disallowTopics,
+        saga_mode: sagaMode,
+        bedtime_mode: true,
+        user_id: currentUser.id
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Request failed");
+
+    document.getElementById("storyTitle").textContent = `${selectedTheme} Bedtime Story`;
+    document.getElementById("storyContent").innerHTML = `<p>${(data.story || "").replace(/\n\n/g, "</p><p>")}</p>`;
+    renderNarration(data.narration_script || "");
+    renderExplainability(data.explainability || null);
+    loadLibrary();
+    loadPerformance();
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  } finally {
+    setLoading(false);
+  }
+});
+
+currentUser = getCurrentUser();
+applyAccountState();
+loadLibrary();
+loadPerformance();
+renderExplainability(null);
+renderNarration("");
+loadVoiceOptions();
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.onvoiceschanged = loadVoiceOptions;
+}
+</script>
+</body></html>
